@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Assessment Potensi Karyawan Kafe</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+       .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+       .section-title {
+            color: #1abc9c;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+       .question-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+       .question-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+       .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+       .rating-scale label {
+            font-weight: normal;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            text-align: center;
+            padding: 5px;
+        }
+       .rating-scale input[type="radio"] {
+            margin-top: 5px;
+            transform: scale(1.2);
+        }
+       .rating-label-text {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+       .demographic-question input,
+       .demographic-question textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #16a085;
+        }
+
+        #results {
+            margin-top: 40px;
+            padding: 25px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            background-color: #ecf0f1;
+            display: none; /* Hidden by default */
+        }
+        #results h2 {
+            color: #2980b9;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+       .role-result {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 5px solid;
+            border-radius: 4px;
+        }
+       .role-result.sangat-potensial { border-color: #27ae60; background-color: #e6f7ee; }
+       .role-result.potensial { border-color: #f39c12; background-color: #fff8e6; }
+       .role-result.marginal { border-color: #e74c3c; background-color: #fdedec; }
+       .role-result.rendah { border-color: #95a5a6; background-color: #f8f9fa; }
+
+       .role-result p { margin: 5px 0; }
+       .role-result strong { font-size: 1.1em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Self-Assessment Potensi Karyawan Kafe</h1>
+    <p>Jawablah pertanyaan berikut dengan memberikan rangking atas kebiasaan pribadi anda dalam skala 1-5, Di mana <strong>1 = hampir tidak pernah</strong>, <strong>2 = jarang</strong>, <strong>3 = sering</strong>, <strong>4 = secara teratur</strong>, <strong>5 = hampir selalu</strong>.</p>
+
+    <form id="assessmentForm">
+        <div class="section-title">A. Dimensi Perilaku Kerja</div>
+
+        <div id="behavioral-questions">
+            </div>
+
+        <div class="section-title">B. Data Kualitatif (Cultural Fit)</div>
+
+        <div class="question-group demographic-question">
+            <label for="q25">25. Nama</label>
+            <input type="text" id="q25" name="q25" required>
+        </div>
+        <div class="question-group demographic-question">
+            <label for="q26">26. Hobi</label>
+            <input type="text" id="q26" name="q26">
+        </div>
+        <div class="question-group demographic-question">
+            <label for="q27">27. Tokoh Idola</label>
+            <input type="text" id="q27" name="q27">
+        </div>
+        <div class="question-group demographic-question">
+            <label for="q28">28. Cita-cita Pekerjaan</label>
+            <input type="text" id="q28" name="q28">
+        </div>
+        <div class="question-group demographic-question">
+            <label for="q29">29. Harapan kepada Pemilik Kafe Payboss</label> <!-- Perubahan di sini -->
+            <textarea id="q29" name="q29" rows="3"></textarea>
+        </div>
+
+        <button type="button" onclick="calculateScore()">Lihat Hasil Penilaian Potensi</button>
+    </form>
+
+    <div id="results">
+        <h2>Hasil Indeks Potensi (IP) Penempatan</h2>
+        <div id="results-content">
+            </div>
+        <p style="margin-top: 20px; font-size: 0.9em; color: #555;">*Catatan: Penilaian ini mengukur potensi perilaku. Keputusan penempatan akhir harus dikombinasikan dengan wawancara dan tes kemampuan teknis.</p>
+    </div>
+
+</div>
+
+<script>
+    // Matriks Pembobotan Item Peran (Bobot 1-5) dari Laporan Ahli
+    // Array index 0 = Q1, index 23 = Q24
+    const WEIGHTS = {
+        'Kasir':    [2, 3, 2, 5, 3, 4, 1, 2, 3, 3, 2, 5, 5, 4, 1, 4, 3, 4, 4, 5, 5, 4, 5, 3],
+        'Waitress': [3, 4, 5, 1, 5, 3, 2, 4, 4, 5, 3, 3, 4, 5, 2, 3, 4, 3, 5, 3, 4, 5, 3, 4],
+        'Koki':     [5, 2, 1, 1, 1, 2, 5, 3, 1, 3, 4, 4, 4, 2, 4, 1, 1, 4, 3, 4, 3, 4, 4, 2],
+        'Barista':  [3, 4, 4, 3, 4, 3, 3, 3, 4, 4, 3, 5, 5, 4, 2, 3, 4, 4, 5, 4, 4, 4, 5, 3]
+    };
+
+    // Rentang Skor Maksimum Teoritis
+    const MAX_SCORES = {
+        'Kasir': 375,
+        'Waitress': 351,
+        'Koki': 279,
+        'Barista': 354
+    };
+
+    // Definisi pertanyaan
+    const questions = [
+        "Saya senang menerima tantangan.",
+        "Saya senang menyakinkan dan memotivasi orang.",
+        "Saya lebih senang bekerja dengan orang daripada dengan sesuatu.",
+        "Saya puas dengan pekerjaan yang berulang ulang.",
+        "Saya senang merintis dan menjaga hubungan dengan orang.",
+        "Saya senang bekerja sebanyak mungkin di satu tempat.",
+        "Saya selalu fokus pada penyelesaian tugas.",
+        "Saya suka mengarahkan orang lain untuk mencapai tujuan.",
+        "Saya cenderung bersikap praktis dan realistis.",
+        "Saya memiliki sifat ingin tahu yang kuat.",
+        "Saya senang melakukan perencanaan dan penataan.",
+        "Saya berhati-hati agar tidak membuat kesalahan.",
+        "Saya dapat bekerja dengan cepat dan akurat di bawah tekanan.",
+        "Saya proaktif mencari tahu apa yang dibutuhkan pelanggan tanpa diminta.",
+        "Saya menjaga kebersihan area kerja saya secara konsisten.",
+        "Saya mampu mengelola konflik atau keluhan pelanggan dengan tenang.",
+        "Saya menikmati mempelajari resep atau metode baru secara mandiri.",
+        "Saya selalu memeriksa stok bahan baku sebelum memulai shift.",
+        "Saya mudah beradaptasi dengan perubahan menu atau prosedur.",
+        "Saya cermat dalam menghitung uang kembalian dan membuat laporan.",
+        "Saya selalu mengikuti instruksi yang diberikan kepada saya.",
+        "Saya mencoba menjadi pemain tim dan bersikap mendukung rekan kerja saya.",
+        "Saya hanya membuat komitmen setelah dengan teliti mempelajari konsekuensi atau dampaknya.",
+        "Saya biasanya menerima segala sesuatu apa adanya."
+    ];
+
+    // Fungsi untuk membuat elemen pertanyaan
+    function createQuestionElement(index, text) {
+        const qNum = index + 1;
+        const group = document.createElement('div');
+        group.classList.add('question-group');
+        group.innerHTML = `
+            <label>${qNum}. ${text}</label>
+            <div class="rating-scale">
+                ${[1, 2, 3, 4, 5].map(score => `
+                    <label>
+                        <input type="radio" name="q${qNum}" value="${score}" required>
+                        ${score}
+                        <span class="rating-label-text">
+                            ${score === 1? 'Hampir tidak pernah' : score === 5? 'Hampir selalu' : ''}
+                        </span>
+                    </label>
+                `).join('')}
+            </div>
+        `;
+        return group;
+    }
+
+    // Memasukkan pertanyaan ke dalam DOM
+    const questionsContainer = document.getElementById('behavioral-questions');
+    questions.forEach((qText, index) => {
+        questionsContainer.appendChild(createQuestionElement(index, qText));
+    });
+
+    // Fungsi utama perhitungan skor
+    function calculateScore() {
+        const form = document.getElementById('assessmentForm');
+        let allAnswered = true;
+        const answers = {};
+
+        // 1. Kumpulkan semua jawaban Q1-Q24
+        for (let i = 1; i <= 24; i++) {
+            const selected = form.querySelector(`input[name="q${i}"]:checked`);
+            if (!selected) {
+                allAnswered = false;
+                break;
+            }
+            answers[i] = parseInt(selected.value);
+        }
+
+        if (!allAnswered) {
+            alert("Harap jawab semua 24 pertanyaan Dimensi Perilaku Kerja sebelum melihat hasil.");
+            return;
+        }
+
+        // Ambil data kualitatif untuk ditampilkan di konsol (opsional)
+        const qualitativeData = {
+            nama: document.getElementById('q25').value,
+            hobi: document.getElementById('q26').value,
+            tokohIdola: document.getElementById('q27').value,
+            citaCita: document.getElementById('q28').value,
+            harapan: document.getElementById('q29').value,
+        };
+        console.log("Data Kualitatif:", qualitativeData);
+
+
+        const resultsContent = document.getElementById('results-content');
+        resultsContent.innerHTML = '';
+        const scores = {};
+
+        // 2. Hitung Indeks Potensi (IP) untuk setiap peran
+        for (const role in WEIGHTS) {
+            let totalScore = 0;
+            const roleWeights = WEIGHTS[role];
+
+            for (let i = 1; i <= 24; i++) {
+                // Formula: Jawaban Q_i * Bobot Q_i
+                totalScore += answers[i] * roleWeights[i - 1];
+            }
+
+            const maxScore = MAX_SCORES[role];
+            const percentage = (totalScore / maxScore) * 100;
+
+            scores[role] = {
+                total: totalScore,
+                max: maxScore,
+                percent: parseFloat(percentage.toFixed(2))
+            };
+        }
+
+        // 3. Tentukan Zonasi Keputusan dan tampilkan hasil
+        for (const role in scores) {
+            const score = scores[role];
+            let level = "";
+            let levelClass = "";
+            let recommendation = "";
+
+            if (score.percent >= 85) {
+                level = "Sangat Potensial (P. Kritis)";
+                levelClass = "sangat-potensial";
+                recommendation = "Penempatan segera di peran target. Fokus pada pelatihan teknis (Hard Skills).";
+            } else if (score.percent >= 70) {
+                level = "Potensial (P. Optimal)";
+                levelClass = "potensial";
+                recommendation = "Penempatan, dengan observasi pada area skor terendah. Perlu pendampingan mentor untuk menguatkan dimensi lemah.";
+            } else if (score.percent >= 50) {
+                level = "Potensi Marginal (P. Marginal)";
+                levelClass = "marginal";
+                recommendation = "Pertimbangkan penempatan di peran yang tidak membutuhkan skor ekstrem (e.g., Trainee). Membutuhkan pelatihan perilaku intensif.";
+            } else {
+                level = "Potensi Rendah (P. Rendah)";
+                levelClass = "rendah";
+                recommendation = "Tidak disarankan untuk peran ini. Disarankan penempatan di peran back-office atau penolakan.";
+            }
+
+            resultsContent.innerHTML += `
+                <div class="role-result ${levelClass}">
+                    <strong>Potensi Penempatan ${role}: ${level}</strong>
+                    <p>Indeks Potensi (IP): ${score.total} dari ${score.max}</p>
+                    <p>Persentase Kecocokan: ${score.percent}%</p>
+                    <p>Rekomendasi: ${recommendation}</p>
+                </div>
+            `;
+        }
+
+        // 4. Tampilkan bagian hasil
+        document.getElementById('results').style.display = 'block';
+        // Gulir ke bagian hasil
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
