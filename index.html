@@ -156,7 +156,7 @@
             <input type="text" id="q28" name="q28">
         </div>
         <div class="question-group demographic-question">
-            <label for="q29">29. Harapan kepada Pemilik Kafe Payboss</label> <!-- Perubahan di sini -->
+            <label for="q29">29. Harapan kepada Pemilik Kafe Payboss</label>
             <textarea id="q29" name="q29" rows="3"></textarea>
         </div>
 
@@ -176,18 +176,18 @@
     // Matriks Pembobotan Item Peran (Bobot 1-5) dari Laporan Ahli
     // Array index 0 = Q1, index 23 = Q24
     const WEIGHTS = {
-        'Kasir':    [2, 3, 2, 5, 3, 4, 1, 2, 3, 3, 2, 5, 5, 4, 1, 4, 3, 4, 4, 5, 5, 4, 5, 3],
-        'Waitress': [3, 4, 5, 1, 5, 3, 2, 4, 4, 5, 3, 3, 4, 5, 2, 3, 4, 3, 5, 3, 4, 5, 3, 4],
-        'Koki':     [5, 2, 1, 1, 1, 2, 5, 3, 1, 3, 4, 4, 4, 2, 4, 1, 1, 4, 3, 4, 3, 4, 4, 2],
-        'Barista':  [3, 4, 4, 3, 4, 3, 3, 3, 4, 4, 3, 5, 5, 4, 2, 3, 4, 4, 5, 4, 4, 4, 5, 3]
+        'Kasir':    [2, 3, 2, 5, 3, 4, 1, 2, 3, 3, 2, 5, 5, 4, 1, 4, 3, 4, 4, 5, 5, 4, 5, 3], // Total Bobot: 89
+        'Waitress': [3, 4, 5, 1, 5, 3, 2, 4, 4, 5, 3, 3, 4, 5, 2, 3, 4, 3, 5, 3, 4, 5, 3, 4], // Total Bobot: 99
+        'Koki':     [5, 2, 1, 1, 1, 2, 5, 3, 1, 3, 4, 4, 4, 2, 4, 1, 1, 4, 3, 4, 3, 4, 4, 2], // Total Bobot: 77
+        'Barista':  [3, 4, 4, 3, 4, 3, 3, 3, 4, 4, 3, 5, 5, 4, 2, 3, 4, 4, 5, 4, 4, 4, 5, 3]  // Total Bobot: 100
     };
 
-    // Rentang Skor Maksimum Teoritis
+    // Rentang Skor Maksimum Teoritis (Diperbaiki: Jumlah Bobot * 5)
     const MAX_SCORES = {
-        'Kasir': 375,
-        'Waitress': 351,
-        'Koki': 279,
-        'Barista': 354
+        'Kasir': 445, // 89 * 5
+        'Waitress': 495, // 99 * 5
+        'Koki': 385, // 77 * 5
+        'Barista': 500 // 100 * 5
     };
 
     // Definisi pertanyaan
@@ -263,6 +263,7 @@
         }
 
         if (!allAnswered) {
+            // Mengganti alert() dengan custom message box jika Anda ingin tampilan yang lebih baik
             alert("Harap jawab semua 24 pertanyaan Dimensi Perilaku Kerja sebelum melihat hasil.");
             return;
         }
@@ -292,7 +293,7 @@
                 totalScore += answers[i] * roleWeights[i - 1];
             }
 
-            const maxScore = MAX_SCORES[role];
+            const maxScore = MAX_SCORES[role]; // Menggunakan nilai MAX_SCORES yang sudah diperbaiki
             const percentage = (totalScore / maxScore) * 100;
 
             scores[role] = {
@@ -309,6 +310,7 @@
             let levelClass = "";
             let recommendation = "";
 
+            // Tentukan Zonasi
             if (score.percent >= 85) {
                 level = "Sangat Potensial (P. Kritis)";
                 levelClass = "sangat-potensial";
