@@ -129,18 +129,18 @@
 
 <div class="container">
     <h1>Self-Assessment Potensi Karyawan Kafe</h1>
-    <p>Jawablah pertanyaan berikut dengan memberikan rangking atas kebiasaan pribadi anda dalam skala 1-5, Di mana <strong>1 = hampir tidak pernah</strong>, <strong>2 = jarang</strong>, <strong>3 = sering</strong>, <strong>4 = secara teratur</strong>, <strong>5 = hampir selalu</strong>.</p>
+    <p>Pilih skor yang paling menggambarkan kebiasaan Anda. Ingat: <strong>1 = Hampir Tidak Pernah</strong> sampai <strong>5 = Hampir Selalu</strong>.</p>
 
     <form id="assessmentForm">
-        <div class="section-title">A. Dimensi Perilaku Kerja</div>
+        <div class="section-title">A. Kebiasaan Kerja Harian</div>
 
         <div id="behavioral-questions">
             </div>
 
-        <div class="section-title">B. Data Kualitatif (Cultural Fit)</div>
+        <div class="section-title">B. Data Diri Tambahan</div>
 
         <div class="question-group demographic-question">
-            <label for="q25">25. Nama</label>
+            <label for="q25">25. Nama Lengkap</label>
             <input type="text" id="q25" name="q25" required>
         </div>
         <div class="question-group demographic-question">
@@ -167,7 +167,7 @@
         <h2>Hasil Indeks Potensi (IP) Penempatan</h2>
         <div id="results-content">
             </div>
-        <p style="margin-top: 20px; font-size: 0.9em; color: #555;">*Catatan: Penilaian ini mengukur potensi perilaku. Keputusan penempatan akhir harus dikombinasikan dengan wawancara dan tes kemampuan teknis.</p>
+        <p style="margin-top: 20px; font-size: 0.9em; color: #555;">*Catatan: Penilaian ini mengukur potensi perilaku. Keputusan penempatan akhir harus digabung dengan wawancara dan tes kemampuan teknis.</p>
     </div>
 
 </div>
@@ -182,7 +182,7 @@
         'Barista':  [3, 4, 4, 3, 4, 3, 3, 3, 4, 4, 3, 5, 5, 4, 2, 3, 4, 4, 5, 4, 4, 4, 5, 3]  // Total Bobot: 100
     };
 
-    // Rentang Skor Maksimum Teoritis (Diperbaiki: Jumlah Bobot * 5)
+    // Rentang Skor Maksimum Teoritis (Jumlah Bobot * 5)
     const MAX_SCORES = {
         'Kasir': 445, // 89 * 5
         'Waitress': 495, // 99 * 5
@@ -190,32 +190,32 @@
         'Barista': 500 // 100 * 5
     };
 
-    // Definisi pertanyaan
+    // Definisi pertanyaan (Sudah disederhanakan untuk lulusan SMA)
     const questions = [
-        "Saya senang menerima tantangan.",
-        "Saya senang menyakinkan dan memotivasi orang.",
-        "Saya lebih senang bekerja dengan orang daripada dengan sesuatu.",
-        "Saya puas dengan pekerjaan yang berulang ulang.",
-        "Saya senang merintis dan menjaga hubungan dengan orang.",
-        "Saya senang bekerja sebanyak mungkin di satu tempat.",
-        "Saya selalu fokus pada penyelesaian tugas.",
-        "Saya suka mengarahkan orang lain untuk mencapai tujuan.",
-        "Saya cenderung bersikap praktis dan realistis.",
-        "Saya memiliki sifat ingin tahu yang kuat.",
-        "Saya senang melakukan perencanaan dan penataan.",
-        "Saya berhati-hati agar tidak membuat kesalahan.",
-        "Saya dapat bekerja dengan cepat dan akurat di bawah tekanan.",
-        "Saya proaktif mencari tahu apa yang dibutuhkan pelanggan tanpa diminta.",
-        "Saya menjaga kebersihan area kerja saya secara konsisten.",
-        "Saya mampu mengelola konflik atau keluhan pelanggan dengan tenang.",
-        "Saya menikmati mempelajari resep atau metode baru secara mandiri.",
-        "Saya selalu memeriksa stok bahan baku sebelum memulai shift.",
-        "Saya mudah beradaptasi dengan perubahan menu atau prosedur.",
-        "Saya cermat dalam menghitung uang kembalian dan membuat laporan.",
-        "Saya selalu mengikuti instruksi yang diberikan kepada saya.",
-        "Saya mencoba menjadi pemain tim dan bersikap mendukung rekan kerja saya.",
-        "Saya hanya membuat komitmen setelah dengan teliti mempelajari konsekuensi atau dampaknya.",
-        "Saya biasanya menerima segala sesuatu apa adanya."
+        "Saya senang mencoba hal-hal baru yang sulit.", // Dulu: Saya senang menerima tantangan
+        "Saya suka mengajak/meyakinkan teman untuk mencoba ide baru.", // Dulu: Saya senang menyakinkan dan memotivasi orang
+        "Saya lebih nyaman kerja tim dan ketemu banyak orang, daripada kerja sendiri.", // Dulu: Saya lebih senang bekerja dengan orang daripada dengan sesuatu
+        "Saya suka pekerjaan yang harus diulang-ulang setiap hari.", // Dulu: Saya puas dengan pekerjaan yang berulang ulang
+        "Saya jago memulai pertemanan dan menjaga hubungan baik.", // Dulu: Saya senang merintis dan menjaga hubungan dengan orang
+        "Saya betah bekerja lama di satu tempat saja.", // Dulu: Saya senang bekerja sebanyak mungkin di satu tempat
+        "Saya selalu fokus sampai tugas selesai.", // Dulu: Saya selalu fokus pada penyelesaian tugas
+        "Saya suka memimpin atau mengarahkan teman lain untuk mencapai tujuan.", // Dulu: Saya suka mengarahkan orang lain untuk mencapai tujuan
+        "Saya lebih suka solusi yang praktis dan terlihat nyata, bukan teori.", // Dulu: Saya cenderung bersikap praktis dan realistis
+        "Saya punya rasa ingin tahu yang besar tentang banyak hal.", // Dulu: Saya memiliki sifat ingin tahu yang kuat
+        "Saya senang membuat rencana detail dan menata semuanya.", // Dulu: Saya senang melakukan perencanaan dan penataan
+        "Saya sangat teliti agar kerjaan tidak salah.", // Dulu: Saya berhati-hati agar tidak membuat kesalahan
+        "Saya bisa kerja cepat dan teliti, walau sedang ramai/tertekan.", // Dulu: Saya dapat bekerja dengan cepat dan akurat di bawah tekanan
+        "Saya suka menawarkan bantuan atau informasi ke pelanggan duluan.", // Dulu: Saya proaktif mencari tahu apa yang dibutuhkan pelanggan tanpa diminta
+        "Saya sangat peduli menjaga kebersihan area kerja saya.", // Dulu: Saya menjaga kebersihan area kerja saya secara konsisten
+        "Saya bisa tenang saat menangani pelanggan yang marah atau mengeluh.", // Dulu: Saya mampu mengelola konflik atau keluhan pelanggan dengan tenang
+        "Saya senang belajar resep baru sendiri di waktu luang.", // Dulu: Saya menikmati mempelajari resep atau metode baru secara mandiri
+        "Saya selalu cek stok bahan baku dulu sebelum mulai shift.", // Dulu: Saya selalu memeriksa stok bahan baku sebelum memulai shift
+        "Saya mudah menyesuaikan diri jika ada menu atau prosedur yang diganti mendadak.", // Dulu: Saya mudah beradaptasi dengan perubahan menu atau prosedur
+        "Saya cermat dalam menghitung kembalian uang dan membuat laporan penjualan.", // Dulu: Saya cermat dalam menghitung uang kembalian dan membuat laporan
+        "Saya selalu ikuti semua perintah atau instruksi yang diberikan atasan.", // Dulu: Saya selalu mengikuti instruksi yang diberikan kepada saya
+        "Saya berusaha jadi anggota tim yang baik dan suka bantu teman kerja.", // Dulu: Saya mencoba menjadi pemain tim dan bersikap mendukung rekan kerja saya
+        "Saya tidak mudah janji. Saya pikirkan dulu semua risikonya sebelum setuju.", // Dulu: Saya hanya membuat komitmen setelah dengan teliti mempelajari konsekuensi atau dampaknya
+        "Saya biasanya menerima semua hal apa adanya tanpa banyak protes.", // Dulu: Saya biasanya menerima segala sesuatu apa adanya
     ];
 
     // Fungsi untuk membuat elemen pertanyaan
@@ -231,7 +231,7 @@
                         <input type="radio" name="q${qNum}" value="${score}" required>
                         ${score}
                         <span class="rating-label-text">
-                            ${score === 1? 'Hampir tidak pernah' : score === 5? 'Hampir selalu' : ''}
+                            ${score === 1? 'Tidak Pernah' : score === 5? 'Selalu' : ''}
                         </span>
                     </label>
                 `).join('')}
@@ -263,8 +263,7 @@
         }
 
         if (!allAnswered) {
-            // Mengganti alert() dengan custom message box jika Anda ingin tampilan yang lebih baik
-            alert("Harap jawab semua 24 pertanyaan Dimensi Perilaku Kerja sebelum melihat hasil.");
+            alert("Harap jawab semua 24 pertanyaan Kebiasaan Kerja Harian sebelum melihat hasil.");
             return;
         }
 
@@ -312,21 +311,21 @@
 
             // Tentukan Zonasi
             if (score.percent >= 85) {
-                level = "Sangat Potensial (P. Kritis)";
+                level = "Sangat Potensial (IP Kritis)";
                 levelClass = "sangat-potensial";
-                recommendation = "Penempatan segera di peran target. Fokus pada pelatihan teknis (Hard Skills).";
+                recommendation = "Bisa langsung ditempatkan di peran ini. Fokus selanjutnya: latih kemampuan teknis (Hard Skills).";
             } else if (score.percent >= 70) {
-                level = "Potensial (P. Optimal)";
+                level = "Potensial (IP Optimal)";
                 levelClass = "potensial";
-                recommendation = "Penempatan, dengan observasi pada area skor terendah. Perlu pendampingan mentor untuk menguatkan dimensi lemah.";
+                recommendation = "Bisa ditempatkan, tapi perlu pengawasan di awal. Berikan mentor untuk kuatkan perilaku yang kurang.";
             } else if (score.percent >= 50) {
-                level = "Potensi Marginal (P. Marginal)";
+                level = "Potensi Marginal (IP Marginal)";
                 levelClass = "marginal";
-                recommendation = "Pertimbangkan penempatan di peran yang tidak membutuhkan skor ekstrem (e.g., Trainee). Membutuhkan pelatihan perilaku intensif.";
+                recommendation = "Pertimbangkan penempatan di peran yang tidak terlalu banyak tuntutan (misalnya Trainee). Butuh pelatihan perilaku intensif.";
             } else {
-                level = "Potensi Rendah (P. Rendah)";
+                level = "Potensi Rendah (IP Rendah)";
                 levelClass = "rendah";
-                recommendation = "Tidak disarankan untuk peran ini. Disarankan penempatan di peran back-office atau penolakan.";
+                recommendation = "Tidak disarankan untuk peran ini. Lebih baik dipindahkan ke posisi back-office atau dipertimbangkan ulang.";
             }
 
             resultsContent.innerHTML += `
